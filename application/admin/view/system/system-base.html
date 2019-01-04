@@ -1,0 +1,161 @@
+﻿{extend name="common:base"/}
+{block name="body"}
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+       href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="page-container">
+    <form class="form form-horizontal" id="form-article-add">
+        <div id="tab-system" class="HuiTab">
+            <div class="tabBar cl">
+                <span>设置</span>
+            </div>
+            <div class="tabCon">
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">
+                        学校名称：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" id="website-title" name="name" class="input-text" value="{$data.name}">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">
+                        建校时间：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" id="website-Keywords" name="jianxiaotime" value="{$data.jianxiaotime}" placeholder="例如：1996"
+                               class="input-text">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">
+                        学校层次：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" id="website-Keywords" name="school_level" value="{$data.school_level}" placeholder="例如：本科院校"
+                               class="input-text">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">
+                        院校性质：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" name="school_character" placeholder="例如：独立学院" class="input-text" value="{$data.school_character}">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">
+                        院校类型：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" name="school_type" placeholder="例如：综合" class="input-text" value="{$data.school_type}">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">
+                        学校地址：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" name="address" placeholder="例如：安徽合肥" value="{$data.address}" class="input-text">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">
+                        招生电话：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" name="mobile" class="input-text" value="{$data.mobile}">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">
+                        全景链接地址：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" name="vr" value="{$data.vr}" class="input-text">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">学校概况：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <textarea name="school_describe" class="textarea">{$data.school_describe}</textarea>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">学科建设：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <textarea name="subject_describe" class="textarea">{$data.subject_describe}</textarea>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">师资力量：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <textarea name="teacher_describe" class="textarea">{$data.teacher_describe}</textarea>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">录取规则：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <textarea name="admission_rules" class="textarea">{$data.admission_rules}</textarea>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">奖助政策：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <textarea name="scholarship_policy" class="textarea">{$data.scholarship_policy}</textarea>
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">logo：</label>
+                    <input type="file" name="logo" class="formControls col-xs-8 col-sm-9">
+                    <img src="{$data.logo}" style="width: 150px" alt="" class="formControls col-xs-8 col-sm-9">
+                </div>
+                <div class="row cl">
+                    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                        <button onClick="article_save_submit();" class="btn btn-primary radius" type="button"><i
+                                class="Hui-iconfont">&#xe632;</i> 保存
+                        </button>
+                        <button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+                    </div>
+                </div>
+    </form>
+</div>
+
+{/block}
+{block name="end"}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+        $("#tab-system").Huitab({
+            index: 0
+        });
+    });
+
+function article_save_submit() {
+    var formData=new FormData($('#form-article-add')[0]);
+    $.ajax({
+        data:formData,
+        dataType:'json',
+        url:"{:url('admin/system/saveInfo')}",
+        type:'POST',
+        processData: false,
+        contentType: false,
+        success(res){
+            if (res.code>0){
+                layer.msg(res.message);
+            } else {
+                layer.msg(res.message);
+            }
+        }
+    })
+}
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>
+{/block}

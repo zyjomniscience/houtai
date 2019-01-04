@@ -1,0 +1,91 @@
+﻿{extend name="common:base"/}
+{block name="body"}
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px"
+       href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<div class="page-container">
+    <form class="form form-horizontal" id="form-article-add">
+        <div id="tab-system" class="HuiTab">
+            <div class="tabBar cl">
+                <span>设置</span>
+            </div>
+            <div class="tabCon">
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">
+                        联系人：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" id="website-title" name="linkman" class="input-text" value="{$data.linkman}">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">
+                        手机号：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" id="website-Keywords" name="mobile" value="{$data.mobile}"
+                               class="input-text">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <label class="form-label col-xs-4 col-sm-2">
+                        工作时间：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        <input type="text" id="website-Keywords" name="time" value="{$data.time}" placeholder="例如：周一到周五  9:00~11:45  14:00~17:00 "
+                               class="input-text">
+                    </div>
+                </div>
+                <div class="row cl">
+                    <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                        <button onClick="article_save_submit();" class="btn btn-primary radius" type="button"><i
+                                class="Hui-iconfont">&#xe632;</i> 保存
+                        </button>
+
+                    </div>
+                </div>
+    </form>
+</div>
+
+{/block}
+{block name="end"}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+        $("#tab-system").Huitab({
+            index: 0
+        });
+    });
+
+function article_save_submit() {
+    var formData=new FormData($('#form-article-add')[0]);
+    $.ajax({
+        data:formData,
+        dataType:'json',
+        url:"{:url('admin/Feedback/feedback_save')}",
+        type:'POST',
+        processData: false,
+        contentType: false,
+        success(res){
+            if (res.code>0){
+                layer.msg(res.message);
+            } else {
+                layer.msg(res.message);
+            }
+        }
+    })
+}
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>
+{/block}

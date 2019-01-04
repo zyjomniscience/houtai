@@ -1,0 +1,120 @@
+{extend name="common:base"/}
+{block name="body"}
+<body>
+<div class="page-container">
+    <p class="f-20 text-success">欢迎使用</p>
+    <table class="table table-border table-bordered table-bg">
+        <thead>
+        <tr>
+            <th colspan="7" scope="col">信息统计</th>
+        </tr>
+        <tr class="text-c">
+            <th>统计</th>
+            <th>资讯库</th>
+            <th>图片库</th>
+            <th>产品库</th>
+            <th>用户</th>
+            <th>管理员</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-c">
+            <td>总数</td>
+            <td>92</td>
+            <td>9</td>
+            <td>0</td>
+            <td>8</td>
+            <td>20</td>
+        </tr>
+        <tr class="text-c">
+            <td>今日</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        <tr class="text-c">
+            <td>昨日</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        <tr class="text-c">
+            <td>本周</td>
+            <td>2</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        <tr class="text-c">
+            <td>本月</td>
+            <td>2</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        </tbody>
+    </table>
+
+<div class="page-container">
+    <div id="container" style="min-width:700px;height:400px"></div>
+</div>
+{/block}
+{block name="end"}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="/static/lib/hcharts/Highcharts/5.0.6/js/highcharts.js"></script>
+<script type="text/javascript" src="/static/lib/hcharts/Highcharts/5.0.6/js/modules/exporting.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#container').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: '报名男女比例'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                data: [
+                    ['Firefox',   45.0],
+                    ['IE',       26.8],
+                    {
+                        name: 'Chrome',
+                        y: 12.8,
+                        sliced: true,
+                        selected: true
+                    },
+                    ['Safari',    8.5],
+                    ['Opera',     6.2],
+                    ['Others',   0.7]
+                ]
+            }]
+        });
+    });
+</script>
+</body>
+</html>
+{/block}

@@ -1,0 +1,124 @@
+{extend name="common:base"/}
+{block name="body"}
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 入校分数线 <span
+		class="c-gray en">&gt;</span> 入校分数线设置 <a class="btn btn-success radius r"
+												 style="line-height:1.6em;margin-top:3px"
+												 href="javascript:location.replace(location.href);" title="刷新"><i
+		class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<form action="" method="post" id="scoreForm">
+		<div class="mt-20">
+			<table class="table table-border table-bordered table-bg table-sort">
+				<thead>
+				{if empty($pid)}
+				<tr class="text-c">
+					<th>省份</th>
+					<th width="100">操作</th>
+				</tr>
+				{else}
+				<tr class="text-c">
+					<th>ID</th>
+					<th>专业名称</th>
+					<th>年份</th>
+					<th>批次</th>
+					<th>省控线</th>
+					<th>平均分</th>
+					<th>最高分</th>
+					<th>最低分</th>
+					<th>删除</th>
+				</tr>
+				{/if}
+				</thead>
+				<tbody>
+				{if empty($pid)}
+				{volist name="city" id="c"}
+				<tr class="text-c">
+					<td>{$c.city_name}</td>
+					<td>
+						<button class="btn btn-warning" onclick="child({$c.id});return false;">子菜单</button>
+					</td>
+				</tr>
+				{/volist}
+				{else}
+				{volist name="cjScore" id="s"}
+				<tr class="text-c">
+					<input type="hidden" name="pid" value="{$pid}">
+					<td>{$s.id}</td>
+					<td><input type="text" class="input-text" name="name[{$s.id}]" value="{$s.name}"></td>
+					<td><input type="text" class="input-text" name="year[{$s.id}]" value="{$s.year}"></td>
+					<td><select name="batch[{$s.id}]" class="select-option">
+						<option value="{$s.batch}" selected="selected">{$s.batch|getBatchAttr}</option>
+						<option value="0">本科提前批</option>
+						<option value="1">本科一批</option>
+						<option value="2">本科二批</option>
+						<option value="3">专科一批</option>
+						<option value="4">专科二批</option>
+					</select></td>
+					<td><input type="text" class="input-text" name="provice_score[{$s.id}]" value="{$s.provice_score}"></td>
+					<td><input type="text" class="input-text" name="avscore[{$s.id}]" value="{$s.avscore}"></td>
+					<td><input type="text" class="input-text" name="max[{$s.id}]" value="{$s.max}"></td>
+					<td><input type="text" class="input-text" name="min[{$s.id}]" value="{$s.min}"></td>
+					<td><a href="{:url('admin/score/pDelete')}?id={$s.id}" class="btn btn-danger">删除</a></td>
+				</tr>
+				{/volist}
+				<tr class="text-c">
+					<input type="hidden" name="pid" value="{$pid}">
+					<td> </td>
+					<td><input type="text" class="input-text" name="name[0]" value=""></td>
+					<td><input type="text" class="input-text" name="year[0]" value=""></td>
+					<td><select name="batch[0]" class="select-option">
+						<option value="0">本科提前批</option>
+						<option value="1">本科一批</option>
+						<option value="2">本科二批</option>
+						<option value="3">专科一批</option>
+						<option value="4">专科二批</option>
+					</select></td>
+					<td><input type="text" class="input-text" name="provice_score[0]" value=""></td>
+					<td><input type="text" class="input-text" name="avscore[0]" value=""></td>
+					<td><input type="text" class="input-text" name="max[0]" value=""></td>
+					<td><input type="text" class="input-text" name="min[0]" value=""></td>
+					<td></td>
+				</tr>
+				{/if}
+				</tbody>
+			</table>
+		</div>
+		{notempty name="$pid"}
+		<div class="row cl">
+			<div class="col-xs-7 col-sm-7 col-xs-offset-2 col-sm-offset-11">
+				<button type="button" class="btn btn-success radius" id="admin-role-save" onclick="save()"
+						name="admin-role-save"><i class="icon-ok"></i> 保存
+				</button>
+			</div>
+		</div>
+		{/notempty}
+		<form>
+			{empty name="$pid"}
+			<nav aria-label="Page navigation" class="text-center">
+				<ul class="pagination pagination-sm">{$page|raw}</ul>
+			</nav>
+			{/empty}
+</div>
+{/block}
+{block name="end"}
+<script type="text/javascript" src="/static/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="/static/lib/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/static/lib/laypage/1.2/laypage.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css"/>
+<script src="/static/js/bootstrap.js"></script>
+<script type="text/javascript">
+
+    function save() {
+        $.post("{:url('admin/score/pSave')}", $('#scoreForm').serialize(), function (res) {
+            window.location.reload();
+        }, 'json')
+    }
+
+    function child(pid) {
+        window.location.href = "{:url('admin/Score/proScore')}?pid=" + pid;
+    }
+</script>
+</body>
+</html>
+{/block}

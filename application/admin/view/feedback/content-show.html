@@ -1,0 +1,25 @@
+{extend name="common:base"}
+{block name="body"}
+<body>
+<article class="page-container">
+    <div class="formControls col-xs-8 col-sm-9">
+        <textarea id="editor"  style="width: 700px;height: 500px"  class="form-control" placeholder="文章内容" id="content" name="content" >{$content}</textarea>
+    </div>
+</article>
+{/block}
+{block name="end"}
+<script type="text/javascript">
+    var editor = $('#editor')
+    if (editor.attr('id') !== undefined)
+    {
+        bkLib.onDomLoaded(function()
+        {
+            new nicEditor({
+                iconsPath : '/static/js/nicedit/nicEditorIcons.gif'
+            }).panelInstance('editor')
+        })
+    }
+</script>
+</body>
+</html>
+{/block}

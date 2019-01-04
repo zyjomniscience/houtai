@@ -1,0 +1,62 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Home</title>
+  <!-- Custom Theme files -->
+  <link href="/static/static/h-ui.admin/login/style.css" rel="stylesheet" type="text/css" media="all"/>
+  <!-- Custom Theme files -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="keywords" content="Login form web template, Sign up Web Templates, Flat Web Templates, Login signup Responsive web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+  <!--Google Fonts-->
+  <link href='http://fonts.useso.com/css?family=Roboto:500,900italic,900,400italic,100,700italic,300,700,500italic,100italic,300italic,400' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.useso.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <!--Google Fonts-->
+  <script src="/static/js/jquery-3.3.1.min.js">
+  </script>
+  <script src="/static/js/layer/layer/layer.js"></script>
+</head>
+<body>
+<div class="login">
+  <h2>后台管理系统</h2>
+  <div class="login-top">
+    <h1>登录</h1>
+    <form method="post" id="login">
+      <input type="text" placeholder="用户名"  name="nickname">
+      <input type="password" placeholder="password"  name="password">
+    </form>
+    <div class="forgot">
+      <input type="button" value="登录" id="lsubmit">
+    </div>
+  </div>
+  <div class="login-bottom">
+
+  </div>
+</div>
+<div class="copyright">
+</div>
+
+<script>
+  $(function () {
+      $('#lsubmit').click(function () {
+          $.ajax({
+              url:"{:url('admin/login/loginCheck')}",
+              type:"POST",
+              dataType:'json',
+              data:$('#login').serialize(),
+              success:function (data) {
+                if (data.code>0){
+                    layer.msg(data.message);
+                }else{
+                    layer.msg(data.message);
+                    window.location.href="{:url('admin/index/index')}";
+                }
+              }
+          })
+      });
+
+  })
+</script>
+</body>
+</html>

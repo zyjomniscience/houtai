@@ -1,0 +1,157 @@
+{extend name="common:base"}
+{block name="body"}
+<body>
+<article class="page-container">
+    <form action="" method="post" class="form form-horizontal" id="form-admin-role-add" enctype="multipart/form-data">
+        {if isset($data.id)}
+        <input type="hidden" value="$data.id">
+        {/if}
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>姓名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{if isset($data.id)}{$data.name}{/if}" placeholder="" id="name" name="name">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>职务：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <select name="title" class="select-box">
+                    {if isset($data.id)}
+                    <option value="{$data.title}">{$data.title}</option>
+                    {/if}
+                    <option value="院长">院长</option>
+                    <option value="名师">名师</option>
+                </select>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>职称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{if isset($data.id)}{$data.job}{/if}" placeholder="" id="job" name="job">
+            </div>
+        </div>
+        <div class="row cl" style="height: 250px">
+            <label class="form-label col-xs-4 col-sm-3">描述：</label>
+            <div   class="formControls col-xs-8 col-sm-9">
+                <textarea  style="height: 200px" name="describe" cols="100" rows="180" id="describe" class="textarea">   {if isset($data.id)}{$data.describe}{/if}</textarea>
+            </div>
+        </div>
+        {if isset($data.id)}
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3">照片：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                <img width="220px" class="img-rounded min" id="zhaopian" src="{$data.img}"/>
+                </div>
+            </div>
+
+        {else}
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">照片：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="file" name="img" id="img">
+            </div>
+        </div>
+        {/if}
+        {if isset($data.id)}
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <button type="button" class="btn btn-success radius" onclick="edit({$data.id})" name="admin-role-save"><i class="icon-ok"></i> 确定</button>
+            </div>
+        </div>
+        {else}
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <button type="button" class="btn btn-success radius" id="admin-role-save" onclick="save()" name="admin-role-save"><i class="icon-ok"></i> 确定</button>
+            </div>
+        </div>
+        {/if}
+
+    </form>
+</article>
+{/block}
+{block name="end"}
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="/static/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script src="/static/js/nicedit/nicEdit.js"></script>
+
+<script type="text/javascript">
+
+    $(function(){
+        $(".permission-list dt input:checkbox").click(function(){
+            $(this).closest("dl").find("dd input:checkbox").prop("checked",$(this).prop("checked"));
+        });
+        $(".permission-list2 dd input:checkbox").click(function(){
+            var l =$(this).parent().parent().find("input:checked").length;
+            var l2=$(this).parents(".permission-list").find(".permission-list2 dd").find("input:checked").length;
+            if($(this).prop("checked")){
+                $(this).closest("dl").find("dt input:checkbox").prop("checked",true);
+                $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",true);
+            }
+            else{
+                if(l==0){
+                    $(this).closest("dl").find("dt input:checkbox").prop("checked",false);
+                }
+                if(l2==0){
+                    $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",false);
+                }
+            }
+        });
+
+        $("#form-admin-role-add").validate({
+            rules:{
+                roleName:{
+                    required:true,
+                },
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                $(form).ajaxSubmit();
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            }
+        });
+    });
+    function save() {
+        var formData=new FormData($("#form-admin-role-add")[0]);
+        $.ajax({
+            url:"{:url('admin/product/save')}",
+            data:formData,
+            type:'POST',
+            dataType:"json",
+            processData: false,
+            contentType: false,
+            success(res){
+                if (res.code>0){
+                    layer.msg(res.message);
+                } else {
+                    layer.msg(res.message);
+                }
+            }
+        })
+    }
+    function edit(id) {
+        var formData=new FormData($("#form-admin-role-add")[0]);
+        $.ajax({
+            url:"{:url('admin/product/save')}?id="+id,
+            data:formData,
+            type:'POST',
+            dataType:"json",
+            processData: false,
+            contentType: false,
+            success(res){
+                if (res.code>0){
+                    layer.msg(res.message);
+                } else {
+                    layer.msg(res.message);
+                }
+            }
+        })
+    }
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>
+{/block}
